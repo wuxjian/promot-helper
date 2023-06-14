@@ -59,10 +59,11 @@ function doInit() {
                 positiveCheckBoxs.forEach(checkBoxChageCallback(POSITIVE))
                 negativeCheckBoxs.forEach(checkBoxChageCallback(NEGATIVE))
                 
-                hasInit = true
-                console.log(`[${APP_NAME}]加载 完成...`)
+                
             }
-        })
+        });
+        hasInit = true
+        console.log(`[${APP_NAME}]加载 完成...`)
     });
 }
 
