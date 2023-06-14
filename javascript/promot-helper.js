@@ -39,7 +39,8 @@ function doInit() {
     }
     tabs.forEach(function(tab){
         tab.addEventListener('click', function(){
-            if (tab.firstChild.innerHTML.trim() == APP_NAME && !hasInit) {
+            if (tab.firstChild.innerHTML.trim() == APP_NAME) {
+                debugger
                 positiveCheckBoxs = gradioApp().querySelectorAll('#positive_accordion .tabitem fieldset input')
                 negativeCheckBoxs = gradioApp().querySelectorAll('#negative_accordion .tabitem fieldset input')
                 if (!positiveCheckBoxs || positiveCheckBoxs.length == 0) {
@@ -62,9 +63,10 @@ function doInit() {
                 
             }
         });
-        hasInit = true
-        console.log(`[${APP_NAME}]加载 完成...`)
+        
     });
+    hasInit = true
+    console.log(`[${APP_NAME}]加载 完成...`)
 }
 
 

@@ -3,7 +3,7 @@ import gradio as gr
 import modules.scripts as scripts
 from modules import script_callbacks
 
-from common import build_ui
+from scripts.common import build_ui
 
 
 app_name = '提示词'
