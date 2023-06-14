@@ -1,6 +1,10 @@
 import gradio as gr
 import json
 from os import path
+try:
+    from modules import generation_parameters_copypaste as send
+except:
+    pass
 
 
 def buildTab(tab_name: str, d: dict):
@@ -25,16 +29,57 @@ def build_ui():
     with gr.Blocks() as ui:
         gr.Markdown("#### 提示词信息")
         with gr.Column():
-            gr.Textbox(label="正面", lines=3, elem_id="positive_word_textbox")
+            p_checkbox = gr.Textbox(label="正面", lines=3, elem_id="positive_word_textbox")
             with gr.Row():
-                gr.Button("发送到文生图", elem_id='positive-send-txt2img')
-                gr.Button("发送到图生图", elem_id='positive-send-img2img')
+                p_btn1 = gr.Button("发送到文生图", elem_id='positive-send-txt2img')
+                p_btn2 =gr.Button("发送到图生图", elem_id='positive-send-img2img')
+                try:
+                    send.register_paste_params_button(
+                        send.ParamBinding(
+                            paste_button=p_btn1,
+                            tabname='txt2img',
+                            source_text_component=p_checkbox,
+                            paste_field_names=['Prompt'],
+                        )
+                    )
+                    send.register_paste_params_button(
+                        send.ParamBinding(
+                            paste_button=p_btn2,
+                            tabname='img2img',
+                            source_text_component=p_checkbox,
+                            paste_field_names=['Prompt']
+                        )
+                    )
+                except:
+                    pass
                 gr.Button("清空", elem_id='positive-clear')
+                
         with gr.Column():
             gr.Textbox(label="负面", lines=3, elem_id="negative_word_textbox")
             with gr.Row():
-                gr.Button("发送到文生图", elem_id='negative-send-txt2img')
-                gr.Button("发送到图生图", elem_id='negative-send-img2img')
+                n_btn1 = gr.Button("发送到文生图", elem_id='negative-send-txt2img')
+                n_btn2 = gr.Button("发送到图生图", elem_id='negative-send-img2img')
+                try:
+                    send.register_paste_params_button(
+                        send.ParamBinding(
+                            paste_button=n_btn1,
+                            tabname='txt2img',
+                            source_image_component=None,
+                            source_text_component=p_checkbox,
+                            paste_field_names=['Negative prompt'],
+                        )
+                    )
+                    send.register_paste_params_button(
+                        send.ParamBinding(
+                            paste_button=n_btn2,
+                            tabname='img2img',
+                            source_image_component=None,
+                            source_text_component=p_checkbox,
+                            paste_field_names=['Negative Prompt']
+                        )
+                    )
+                except:
+                    pass
                 gr.Button("清空", elem_id='negative-clear')
 
         with gr.Blocks():
