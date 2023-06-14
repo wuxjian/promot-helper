@@ -11,7 +11,7 @@ window.onload = function() {
         var tabs = gradioApp().querySelectorAll('#header .ant-menu-overflow-item')
         tabs.forEach(function(tab){
             tab.addEventListener('click', function(){
-                if (tab.firstChild.innerHTML.trim() == '提示词扩展' && !init) {
+                if (tab.firstChild.innerHTML.trim() == '提示词' && !init) {
                     var checkBoxs = gradioApp().querySelectorAll('.tabitem fieldset input')
                     if (!checkBoxs) {
                         return

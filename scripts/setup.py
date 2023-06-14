@@ -38,7 +38,7 @@ def on_ui_tabs():
                 buildTabs('positive')
 
 
-        return [(ui_component, "提示词扩展", "提示词扩展")]
+        return [(ui_component, "提示词", "提示词")]
 
 script_callbacks.on_ui_tabs(on_ui_tabs)
 
