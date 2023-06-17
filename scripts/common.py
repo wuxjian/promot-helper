@@ -85,7 +85,7 @@ def build_ui():
         with gr.Blocks():
             buildTabs('positive', '正面提示词')
         
-        with gr.Blocks():
-            buildTabs('negative', '负面提示词')
+        # with gr.Blocks():
+        #     buildTabs('negative', '负面提示词')
 
         return ui

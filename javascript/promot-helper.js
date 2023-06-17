@@ -37,34 +37,24 @@ function doInit() {
     if (!tabs || tabs.length == 0) {
         return
     }
-    tabs.forEach(function(tab){
-        tab.addEventListener('click', function(){
-            if (tab.firstChild.innerHTML.trim() == APP_NAME) {
-                debugger
-                positiveCheckBoxs = gradioApp().querySelectorAll('#positive_accordion .tabitem fieldset input')
-                negativeCheckBoxs = gradioApp().querySelectorAll('#negative_accordion .tabitem fieldset input')
-                if (!positiveCheckBoxs || positiveCheckBoxs.length == 0) {
-                    return
-                }
+    positiveCheckBoxs = gradioApp().querySelectorAll('#positive_accordion .tabitem fieldset input')
+    negativeCheckBoxs = gradioApp().querySelectorAll('#negative_accordion .tabitem fieldset input')
+    if (!positiveCheckBoxs || positiveCheckBoxs.length == 0) {
+        return
+    }
 
-                positiveTextarea = gradioApp().querySelectorAll('#positive_word_textbox label textarea')[0]
-                negativeTextarea = gradioApp().querySelectorAll('#negative_word_textbox label textarea')[0]
+    positiveTextarea = gradioApp().querySelectorAll('#positive_word_textbox label textarea')[0]
+    negativeTextarea = gradioApp().querySelectorAll('#negative_word_textbox label textarea')[0]
 
-                positiveClearbutton = gradioApp().getElementById('positive-clear')
-                negativeClearbutton = gradioApp().getElementById('negative-clear')
-                // 清空按钮注册事件
-                positiveClearbutton.addEventListener('click', clearButtonClickCallback(POSITIVE))
-                negativeClearbutton.addEventListener('click', clearButtonClickCallback(NEGATIVE))
-                
-                // checkbox注册事件
-                positiveCheckBoxs.forEach(checkBoxChageCallback(POSITIVE))
-                negativeCheckBoxs.forEach(checkBoxChageCallback(NEGATIVE))
-                
-                
-            }
-        });
-        
-    });
+    positiveClearbutton = gradioApp().getElementById('positive-clear')
+    negativeClearbutton = gradioApp().getElementById('negative-clear')
+    // 清空按钮注册事件
+    positiveClearbutton.addEventListener('click', clearButtonClickCallback(POSITIVE))
+    negativeClearbutton.addEventListener('click', clearButtonClickCallback(NEGATIVE))
+    
+    // checkbox注册事件
+    positiveCheckBoxs.forEach(checkBoxChageCallback(POSITIVE))
+    negativeCheckBoxs.forEach(checkBoxChageCallback(NEGATIVE))
     hasInit = true
     console.log(`[${APP_NAME}]加载 完成...`)
 }
