@@ -9,16 +9,13 @@ var positiveWords = []
 var negativeWords = []
 
 var positiveTextarea // 正面的textarea
-var negativeTextarea // 负面的textarea
 
 var positiveCheckBoxs // 正面checkBox
-var negativeCheckBoxs // 负面checkBox
 
 var positiveClearbutton // 正面清空btn
-var negativeClearbutton // 负面清空btn
 
 
-window.onload = function() {
+window.onload = function () {
     console.log(`[${APP_NAME}]加载...`)
     var promotoHelperTimer = setInterval(() => {
         if (hasInit) {
@@ -38,23 +35,18 @@ function doInit() {
         return
     }
     positiveCheckBoxs = gradioApp().querySelectorAll('#positive_accordion .tabitem fieldset input')
-    negativeCheckBoxs = gradioApp().querySelectorAll('#negative_accordion .tabitem fieldset input')
     if (!positiveCheckBoxs || positiveCheckBoxs.length == 0) {
         return
     }
 
     positiveTextarea = gradioApp().querySelectorAll('#positive_word_textbox label textarea')[0]
-    negativeTextarea = gradioApp().querySelectorAll('#negative_word_textbox label textarea')[0]
 
     positiveClearbutton = gradioApp().getElementById('positive-clear')
-    negativeClearbutton = gradioApp().getElementById('negative-clear')
     // 清空按钮注册事件
     positiveClearbutton.addEventListener('click', clearButtonClickCallback(POSITIVE))
-    negativeClearbutton.addEventListener('click', clearButtonClickCallback(NEGATIVE))
-    
+
     // checkbox注册事件
     positiveCheckBoxs.forEach(checkBoxChageCallback(POSITIVE))
-    negativeCheckBoxs.forEach(checkBoxChageCallback(NEGATIVE))
     hasInit = true
     console.log(`[${APP_NAME}]加载 完成...`)
 }
@@ -67,9 +59,9 @@ function checkBoxChageCallback(type) {
         arr = negativeWords
         textarea = negativeTextarea
     }
-    return function(checkbox) {
-        checkbox.addEventListener('change', function(){
-            var span =  checkbox.parentNode.children[1]
+    return function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            var span = checkbox.parentNode.children[1]
             var text = span.innerHTML;
             text = text.substring(text.indexOf('-') + 1);
             if (checkbox.checked) {
@@ -77,7 +69,7 @@ function checkBoxChageCallback(type) {
             } else {
                 var index = arr.indexOf(text)
                 if (index > -1) {
-                    arr.splice(index,1)
+                    arr.splice(index, 1)
                 }
             }
             textarea.value = arr.join(', ')
@@ -94,10 +86,10 @@ function clearButtonClickCallback(type) {
         textarea = negativeTextarea
         checkBoxs = negativeCheckBoxs
     }
-    return function() {
+    return function () {
         arr = []
         textarea.value = ''
-        checkBoxs.forEach(function(checkbox){
+        checkBoxs.forEach(function (checkbox) {
             if (checkbox.checked) {
                 checkbox.checked = false
             }

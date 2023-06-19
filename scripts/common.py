@@ -15,9 +15,9 @@ def buildTab(tab_name: str, d: dict):
         gr.CheckboxGroup(l, show_label=False, elem_classes="promot-group", elem_id=f"promot-group-{tab_name}")
         
 
-def buildTabs(type: str, label: str):
-    with gr.Accordion(label, open=True, elem_id=f"{type}_accordion"):
-        for (k, v) in json_data[type].items():
+def buildTabs():
+    with gr.Accordion('正面提示词', open=True, elem_id=f"promot_accordion"):
+        for (k, v) in json_data.items():
             buildTab(k, v)
 
 ### 获取数据
@@ -38,54 +38,25 @@ def build_ui():
                         send.ParamBinding(
                             paste_button=p_btn1,
                             tabname='txt2img',
+                            source_tabname="txt2img",
                             source_text_component=p_checkbox,
-                            paste_field_names=['Prompt'],
+                            paste_field_names=modules.scripts.scripts_txt2img.paste_field_names
                         )
                     )
                     send.register_paste_params_button(
                         send.ParamBinding(
                             paste_button=p_btn2,
                             tabname='img2img',
+                            source_tabname="img2img",
                             source_text_component=p_checkbox,
-                            paste_field_names=['Prompt']
+                            paste_field_names= modules.scripts.scripts_img2img.paste_field_names
                         )
                     )
                 except:
                     pass
                 gr.Button("清空", elem_id='positive-clear')
                 
-        with gr.Column():
-            gr.Textbox(label="负面", lines=3, elem_id="negative_word_textbox")
-            with gr.Row():
-                n_btn1 = gr.Button("发送到文生图", elem_id='negative-send-txt2img')
-                n_btn2 = gr.Button("发送到图生图", elem_id='negative-send-img2img')
-                try:
-                    send.register_paste_params_button(
-                        send.ParamBinding(
-                            paste_button=n_btn1,
-                            tabname='txt2img',
-                            source_image_component=None,
-                            source_text_component=p_checkbox,
-                            paste_field_names=['Negative prompt'],
-                        )
-                    )
-                    send.register_paste_params_button(
-                        send.ParamBinding(
-                            paste_button=n_btn2,
-                            tabname='img2img',
-                            source_image_component=None,
-                            source_text_component=p_checkbox,
-                            paste_field_names=['Negative Prompt']
-                        )
-                    )
-                except:
-                    pass
-                gr.Button("清空", elem_id='negative-clear')
-
         with gr.Blocks():
-            buildTabs('positive', '正面提示词')
+            buildTabs()
         
-        # with gr.Blocks():
-        #     buildTabs('negative', '负面提示词')
-
         return ui
