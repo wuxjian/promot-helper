@@ -6,7 +6,6 @@ var NEGATIVE = 'negative'
 var hasInit = false
 
 var positiveWords = []
-var negativeWords = []
 
 var positiveTextarea // 正面的textarea
 
@@ -34,62 +33,58 @@ function doInit() {
     if (!tabs || tabs.length == 0) {
         return
     }
-    positiveCheckBoxs = gradioApp().querySelectorAll('#positive_accordion .tabitem fieldset input')
+    positiveCheckBoxs = gradioApp().querySelectorAll('#promot_accordion .tabitem fieldset input')
     if (!positiveCheckBoxs || positiveCheckBoxs.length == 0) {
         return
     }
 
-    positiveTextarea = gradioApp().querySelectorAll('#positive_word_textbox label textarea')[0]
+    positiveTextarea = gradioApp().querySelectorAll('#positive_word_textbox textarea')[0]
 
     positiveClearbutton = gradioApp().getElementById('positive-clear')
+    txt2img = gradioApp().getElementById('promot-txt2img')
+    img2img = gradioApp().getElementById('promot-img2img')
+    txt2img.addEventListener('click', function(){
+        gradioApp().querySelectorAll('#header .ant-menu-overflow-item')[0].click()
+        gradioApp().querySelectorAll('#txt2img_prompt textarea')[0].value = positiveTextarea.value
+    })
+    img2img.addEventListener('click', function(){
+        gradioApp().querySelectorAll('#header .ant-menu-overflow-item')[1].click()
+        gradioApp().querySelectorAll('#img2img_prompt textarea')[0].value = positiveTextarea.value
+    })
     // 清空按钮注册事件
-    positiveClearbutton.addEventListener('click', clearButtonClickCallback(POSITIVE))
+    positiveClearbutton.addEventListener('click', clearButtonClickCallback())
 
     // checkbox注册事件
-    positiveCheckBoxs.forEach(checkBoxChageCallback(POSITIVE))
+    positiveCheckBoxs.forEach(checkBoxChageCallback())
     hasInit = true
     console.log(`[${APP_NAME}]加载 完成...`)
 }
 
 
-function checkBoxChageCallback(type) {
-    var arr = positiveWords
-    var textarea = positiveTextarea
-    if (type == NEGATIVE) {
-        arr = negativeWords
-        textarea = negativeTextarea
-    }
+function checkBoxChageCallback() {
     return function (checkbox) {
         checkbox.addEventListener('change', function () {
             var span = checkbox.parentNode.children[1]
             var text = span.innerHTML;
             text = text.substring(text.indexOf('-') + 1);
             if (checkbox.checked) {
-                arr.push(text)
+                positiveWords.push(text)
             } else {
-                var index = arr.indexOf(text)
+                var index = positiveWords.indexOf(text)
                 if (index > -1) {
-                    arr.splice(index, 1)
+                    positiveWords.splice(index, 1)
                 }
             }
-            textarea.value = arr.join(', ')
+            positiveTextarea.value = positiveWords.join(', ')
         })
     }
 }
 
-function clearButtonClickCallback(type) {
-    var arr = positiveWords
-    var textarea = positiveTextarea
-    var checkBoxs = positiveCheckBoxs
-    if (type == NEGATIVE) {
-        arr = negativeWords
-        textarea = negativeTextarea
-        checkBoxs = negativeCheckBoxs
-    }
+function clearButtonClickCallback() {
     return function () {
-        arr = []
-        textarea.value = ''
-        checkBoxs.forEach(function (checkbox) {
+        positiveWords = []
+        positiveTextarea.value = ''
+        positiveCheckBoxs.forEach(function (checkbox) {
             if (checkbox.checked) {
                 checkbox.checked = false
             }
