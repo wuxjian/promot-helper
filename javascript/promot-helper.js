@@ -1,7 +1,6 @@
 // 是否已经初始化
 var APP_NAME = '提示词'
 var POSITIVE = 'positive'
-var NEGATIVE = 'negative'
 
 var hasInit = false
 

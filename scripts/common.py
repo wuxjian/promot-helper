@@ -1,11 +1,6 @@
 import gradio as gr
 import json
 from os import path
-try:
-    import modules.generation_parameters_copypaste as parameters_copypaste
-except:
-    pass
-
 
 def buildTab(tab_name: str, d: dict):
     with gr.Tab(tab_name, elem_id=f"promot-tab-{tab_name}"):
@@ -30,7 +25,6 @@ def build_ui():
         gr.Markdown("#### 提示词信息")
         with gr.Column():
             gr.Textbox(label="正面", lines=3, elem_id="positive_word_textbox")
-            # generation_info = gr.Textbox(visible=True, elem_id="positive_word_textbox")
             with gr.Row():
                 gr.Button("发送到文生图", elem_id='promot-txt2img')
                 gr.Button("发送到图生图", elem_id='promot-img2img')
