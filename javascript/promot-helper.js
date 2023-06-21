@@ -29,7 +29,7 @@ function doInit() {
     if (hasInit) {
         return
     }
-    var tabs = gradioApp().querySelectorAll('#header .ant-menu-overflow-item')
+    var tabs = gradioApp().querySelectorAll('#tabs button')
     if (!tabs || tabs.length == 0) {
         return
     }
