@@ -28,7 +28,7 @@ function doInit() {
     if (hasInit) {
         return
     }
-    var tabs = gradioApp().querySelectorAll('#tabs button')
+    var tabs = gradioApp().querySelectorAll('#tabs>.tab-nav button')
     if (!tabs || tabs.length == 0) {
         return
     }
@@ -43,11 +43,11 @@ function doInit() {
     txt2img = gradioApp().getElementById('promot-txt2img')
     img2img = gradioApp().getElementById('promot-img2img')
     txt2img.addEventListener('click', function(){
-        gradioApp().querySelectorAll('#header .ant-menu-overflow-item')[0].click()
+        gradioApp().querySelectorAll('#tabs>.tab-nav button')[0].click()
         gradioApp().querySelectorAll('#txt2img_prompt textarea')[0].value = positiveTextarea.value
     })
     img2img.addEventListener('click', function(){
-        gradioApp().querySelectorAll('#header .ant-menu-overflow-item')[1].click()
+        gradioApp().querySelectorAll('#tabs>.tab-nav button')[1].click()
         gradioApp().querySelectorAll('#img2img_prompt textarea')[0].value = positiveTextarea.value
     })
     // 清空按钮注册事件
